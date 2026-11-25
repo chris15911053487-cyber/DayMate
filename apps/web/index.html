@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="paper">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="DayMate：会听你说话的日历和小助手" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="DayMate" />
+    <meta name="theme-color" content="#f4eee2" />
+    <title>DayMate</title>
+    <script>
+      // React 启动前先套上本机记住的主题，避免先闪一下默认主题（docs/技术方案.md 10.4）
+      try {
+        var t = localStorage.getItem('daymate.theme')
+        // 只认小写字母 id；不认识的主题没有对应 CSS，会自然落回默认主题
+        if (t && /^[a-z0-9]+$/.test(t)) document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

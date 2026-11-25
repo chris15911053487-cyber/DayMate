@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+@import './theme/themes.css';
+
+/* 只提供语义 token；清空默认调色板，bg-slate-100 这类写法不会生成（配合 npm run lint:colors） */
+@theme inline {
+  --color-*: initial;
+  --color-bg: rgb(var(--c-bg));
+  --color-surface: rgb(var(--c-surface));
+  --color-surface-2: rgb(var(--c-surface-2));
+  --color-line: rgb(var(--c-line));
+  --color-fg: rgb(var(--c-fg));
+  --color-fg-2: rgb(var(--c-fg-2));
+  --color-muted: rgb(var(--c-muted));
+  --color-primary: rgb(var(--c-primary));
+  --color-primary-fg: rgb(var(--c-primary-fg));
+  --color-primary-soft: rgb(var(--c-primary-soft));
+  --color-accent: rgb(var(--c-accent));
+  --color-accent-soft: rgb(var(--c-accent-soft));
+  --color-success: rgb(var(--c-success));
+  --color-warning: rgb(var(--c-warning));
+  --color-danger: rgb(var(--c-danger));
+  --font-sans: var(--font-body-stack);
+  --font-display: var(--font-display-stack);
+  --radius-card: var(--r-card);
+  --radius-control: var(--r-control);
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-body-stack);
+    color: rgb(var(--c-fg));
+  }
+}
+
+@layer components {
+  /* 页面底色 + 主题纹理；body 和主题样张的手机框共用 */
+  .app-surface {
+    background-color: rgb(var(--c-bg));
+    background-image: var(--app-backdrop);
+    background-size: var(--app-backdrop-size);
+    background-position: var(--app-backdrop-position);
+    color: rgb(var(--c-fg));
+    font-family: var(--font-body-stack);
+  }
+  .card {
+    background-color: rgb(var(--c-surface) / var(--surface-alpha));
+    backdrop-filter: blur(var(--surface-blur));
+    -webkit-backdrop-filter: blur(var(--surface-blur));
+    background-image: var(--card-backdrop);
+    border: var(--card-border-w) var(--card-border-style) rgb(var(--c-card-border) / var(--card-border-alpha));
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+  }
+  .display {
+    font-family: var(--font-display-stack);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--display-tracking);
+    text-shadow: var(--display-shadow);
+  }
+  .timeline-rail {
+    border-left: 2px var(--timeline-style) rgb(var(--c-line));
+  }
+}

@@ -1,0 +1,456 @@
+/**
+ * 预设主题的 token。组件只能经 styles.css 的 @theme 语义色 / 圆角 / 字体使用这些变量，不得写死颜色。
+ * 颜色是 RGB 三元组，便于 bg-primary/10 这类透明度写法。
+ * 切换：<html data-theme="主题 id">（id 列表见 packages/shared/src/theme.ts）；任意元素也可局部套用（主题样张页就是这样做的）。
+ * 新增 token 时每套主题都要补齐；主题 id 列表在 packages/shared/src/theme.ts。
+ */
+/*
+ * 非颜色 token 的默认值。每个 [data-theme] 元素都先重置成默认，避免外层主题的发光、纹理等
+ * 漏进局部套用的主题（主题样张页就是在一个主题里嵌套另一个主题）。
+ */
+:root,
+[data-theme] {
+  --card-border-style: solid;
+  --card-backdrop: none;
+  --display-shadow: none;
+  --app-backdrop: none;
+  --app-backdrop-size: auto;
+  --app-backdrop-position: 0 0;
+  --font-mono-stack: 'SF Mono', Menlo, Consolas, 'PingFang SC', 'Microsoft YaHei', monospace;
+}
+
+:root,
+[data-theme='paper'] {
+  /* 暖纸手账：米黄纸面、赭石主色、墨蓝点缀、衬线标题 */
+  color-scheme: light;
+  --c-bg: 244 238 226;
+  --c-surface: 255 251 242;
+  --c-surface-2: 239 231 215;
+  --c-line: 225 213 192;
+  --c-card-border: 225 213 192;
+  --c-fg: 43 38 32;
+  --c-fg-2: 86 77 66;
+  --c-muted: 138 126 110;
+  --c-primary: 178 72 36;
+  --c-primary-fg: 255 251 242;
+  --c-primary-soft: 246 225 211;
+  --c-accent: 58 92 120;
+  --c-accent-soft: 223 231 237;
+  --c-success: 84 122 74;
+  --c-warning: 176 122 28;
+  --c-danger: 178 58 48;
+  --surface-alpha: 1;
+  --surface-blur: 0px;
+  --card-border-w: 1px;
+  --card-border-alpha: 1;
+  --r-card: 16px;
+  --r-control: 10px;
+  --shadow-card: 0 1px 0 rgb(var(--c-line)), 0 10px 24px -16px rgb(80 50 20 / 0.35);
+  --font-display-stack: 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  --display-weight: 700;
+  --display-tracking: 0.02em;
+  --timeline-style: dashed;
+  --app-backdrop: radial-gradient(rgb(var(--c-line) / 0.55) 1px, transparent 1.2px);
+  --app-backdrop-size: 18px 18px;
+}
+
+[data-theme='mono'] {
+  /* 极简黑白：大留白、粗黑字、方角黑框、错位硬阴影、单一信号橙 */
+  color-scheme: light;
+  --c-bg: 246 246 243;
+  --c-surface: 255 255 255;
+  --c-surface-2: 236 236 232;
+  --c-line: 222 222 218;
+  --c-card-border: 12 12 12;
+  --c-fg: 12 12 12;
+  --c-fg-2: 58 58 58;
+  --c-muted: 118 118 114;
+  --c-primary: 12 12 12;
+  --c-primary-fg: 255 255 255;
+  --c-primary-soft: 232 232 228;
+  --c-accent: 255 72 30;
+  --c-accent-soft: 255 228 218;
+  --c-success: 22 122 62;
+  --c-warning: 196 128 0;
+  --c-danger: 214 40 28;
+  --surface-alpha: 1;
+  --surface-blur: 0px;
+  --card-border-w: 1.5px;
+  --card-border-alpha: 1;
+  --r-card: 4px;
+  --r-control: 2px;
+  --shadow-card: 4px 4px 0 rgb(var(--c-card-border));
+  --font-display-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --display-weight: 900;
+  --display-tracking: -0.02em;
+  --timeline-style: solid;
+  --app-backdrop: none;
+  --app-backdrop-size: auto;
+}
+
+[data-theme='night'] {
+  /* 夜航：深蓝夜色、薄荷荧光主色、紫色点缀、半透明玻璃卡片 */
+  color-scheme: dark;
+  --c-bg: 9 13 28;
+  --c-surface: 26 33 62;
+  --c-surface-2: 34 43 78;
+  --c-line: 54 64 104;
+  --c-card-border: 120 136 200;
+  --c-fg: 234 238 255;
+  --c-fg-2: 188 196 226;
+  --c-muted: 130 140 178;
+  --c-primary: 94 234 212;
+  --c-primary-fg: 6 22 30;
+  --c-primary-soft: 22 64 74;
+  --c-accent: 167 139 250;
+  --c-accent-soft: 48 40 90;
+  --c-success: 74 222 128;
+  --c-warning: 251 191 36;
+  --c-danger: 251 113 133;
+  --surface-alpha: 0.55;
+  --surface-blur: 18px;
+  --card-border-w: 1px;
+  --card-border-alpha: 0.2;
+  --r-card: 22px;
+  --r-control: 14px;
+  --shadow-card: 0 12px 32px -14px rgb(0 0 0 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --font-display-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  --display-weight: 600;
+  --display-tracking: 0.01em;
+  --timeline-style: solid;
+  --app-backdrop: radial-gradient(60% 45% at 85% 0%, rgb(var(--c-accent) / 0.28), transparent 70%),
+    radial-gradient(55% 40% at 0% 100%, rgb(var(--c-primary) / 0.16), transparent 70%);
+  --app-backdrop-size: auto;
+}
+
+[data-theme='ink'] {
+  /* 水墨：宣纸底、淡墨晕染、楷体标题、朱砂红、黛绿 */
+  color-scheme: light;
+  --c-bg: 245 242 235;
+  --c-surface: 251 249 244;
+  --c-surface-2: 236 232 222;
+  --c-line: 214 208 194;
+  --c-card-border: 60 58 54;
+  --c-fg: 30 30 30;
+  --c-fg-2: 68 66 62;
+  --c-muted: 112 108 100;
+  --c-primary: 168 36 36;
+  --c-primary-fg: 251 249 244;
+  --c-primary-soft: 243 224 220;
+  --c-accent: 52 88 78;
+  --c-accent-soft: 222 232 228;
+  --c-success: 52 110 70;
+  --c-warning: 160 110 20;
+  --c-danger: 168 36 36;
+  --surface-alpha: 0.92;
+  --surface-blur: 0px;
+  --card-border-w: 1px;
+  --card-border-alpha: 0.18;
+  --r-card: 3px;
+  --r-control: 2px;
+  --shadow-card: 0 2px 10px -6px rgb(0 0 0 / 0.18);
+  --font-display-stack: 'Kaiti SC', 'STKaiti', 'KaiTi', 'BiauKai', 'Songti SC', serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --display-weight: 600;
+  --display-tracking: 0.12em;
+  --timeline-style: solid;
+  --app-backdrop: radial-gradient(70% 40% at 95% 0%, rgb(var(--c-fg) / 0.09), transparent 70%),
+    radial-gradient(50% 30% at 0% 85%, rgb(var(--c-accent) / 0.1), transparent 70%);
+}
+
+[data-theme='pixel'] {
+  /* 像素游戏：淡紫方格底、3px 粗黑边、方块阴影、等宽字 */
+  color-scheme: light;
+  --c-bg: 232 226 255;
+  --c-surface: 255 255 255;
+  --c-surface-2: 240 236 255;
+  --c-line: 186 176 228;
+  --c-card-border: 30 20 60;
+  --c-fg: 30 20 60;
+  --c-fg-2: 66 56 104;
+  --c-muted: 96 86 136;
+  --c-primary: 206 34 92;
+  --c-primary-fg: 255 255 255;
+  --c-primary-soft: 255 220 232;
+  --c-accent: 0 100 210;
+  --c-accent-soft: 214 232 255;
+  --c-success: 22 130 52;
+  --c-warning: 190 110 0;
+  --c-danger: 206 34 34;
+  --surface-alpha: 1;
+  --surface-blur: 0px;
+  --card-border-w: 3px;
+  --card-border-alpha: 1;
+  --r-card: 0px;
+  --r-control: 0px;
+  --shadow-card: 4px 0 0 0 rgb(var(--c-card-border)), 0 4px 0 0 rgb(var(--c-card-border)), 4px 4px 0 0 rgb(var(--c-card-border));
+  --font-display-stack: var(--font-mono-stack);
+  --font-body-stack: var(--font-mono-stack);
+  --display-weight: 800;
+  --display-tracking: 0.02em;
+  --timeline-style: dotted;
+  --app-backdrop: linear-gradient(rgb(var(--c-line) / 0.5) 2px, transparent 2px),
+    linear-gradient(90deg, rgb(var(--c-line) / 0.5) 2px, transparent 2px);
+  --app-backdrop-size: 24px 24px, 24px 24px;
+}
+
+[data-theme='cyber'] {
+  /* 赛博霓虹：近黑底 + 扫描线，粉色主色发光，青色点缀 */
+  color-scheme: dark;
+  --c-bg: 8 6 18;
+  --c-surface: 20 14 40;
+  --c-surface-2: 36 26 66;
+  --c-line: 74 52 124;
+  --c-card-border: 255 46 170;
+  --c-fg: 244 238 255;
+  --c-fg-2: 206 196 238;
+  --c-muted: 156 142 206;
+  --c-primary: 255 46 170;
+  --c-primary-fg: 20 0 20;
+  --c-primary-soft: 74 16 62;
+  --c-accent: 0 236 255;
+  --c-accent-soft: 0 56 76;
+  --c-success: 57 255 140;
+  --c-warning: 255 214 0;
+  --c-danger: 255 72 96;
+  --surface-alpha: 0.78;
+  --surface-blur: 6px;
+  --card-border-w: 1px;
+  --card-border-alpha: 0.55;
+  --r-card: 6px;
+  --r-control: 4px;
+  --shadow-card: 0 0 20px -4px rgb(var(--c-primary) / 0.55), inset 0 0 12px -6px rgb(var(--c-accent) / 0.5);
+  --font-display-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --display-weight: 800;
+  --display-tracking: 0.06em;
+  --display-shadow: 0 0 6px rgb(var(--c-primary) / 0.9), 0 0 18px rgb(var(--c-primary) / 0.5);
+  --timeline-style: solid;
+  --app-backdrop: repeating-linear-gradient(0deg, rgb(255 255 255 / 0.035) 0 1px, transparent 1px 3px),
+    radial-gradient(60% 40% at 100% 0%, rgb(var(--c-primary) / 0.22), transparent 70%),
+    radial-gradient(60% 40% at 0% 100%, rgb(var(--c-accent) / 0.18), transparent 70%);
+}
+
+[data-theme='terminal'] {
+  /* 复古终端：黑底荧光绿、琥珀点缀、等宽字、虚线框、字有余辉 */
+  color-scheme: dark;
+  --c-bg: 5 12 7;
+  --c-surface: 9 22 12;
+  --c-surface-2: 16 36 20;
+  --c-line: 32 84 44;
+  --c-card-border: 70 210 100;
+  --c-fg: 126 255 146;
+  --c-fg-2: 96 222 116;
+  --c-muted: 66 168 86;
+  --c-primary: 126 255 146;
+  --c-primary-fg: 5 12 7;
+  --c-primary-soft: 18 58 26;
+  --c-accent: 255 196 60;
+  --c-accent-soft: 58 46 10;
+  --c-success: 126 255 146;
+  --c-warning: 255 196 60;
+  --c-danger: 255 96 72;
+  --surface-alpha: 1;
+  --surface-blur: 0px;
+  --card-border-w: 1px;
+  --card-border-alpha: 0.6;
+  --card-border-style: dashed;
+  --r-card: 0px;
+  --r-control: 0px;
+  --shadow-card: 0 0 14px -6px rgb(var(--c-primary) / 0.45);
+  --font-display-stack: var(--font-mono-stack);
+  --font-body-stack: var(--font-mono-stack);
+  --display-weight: 700;
+  --display-tracking: 0.04em;
+  --display-shadow: 0 0 8px rgb(var(--c-primary) / 0.7);
+  --timeline-style: dashed;
+  --app-backdrop: repeating-linear-gradient(0deg, rgb(var(--c-primary) / 0.04) 0 1px, transparent 1px 4px),
+    radial-gradient(80% 60% at 50% 40%, rgb(var(--c-primary) / 0.06), transparent 75%);
+}
+
+[data-theme='y2k'] {
+  /* 千禧糖果：镭射渐变底、果冻光泽卡片、超大圆角、亮粉 + 电光蓝 */
+  color-scheme: light;
+  --c-bg: 250 236 255;
+  --c-surface: 255 255 255;
+  --c-surface-2: 248 232 255;
+  --c-line: 232 200 240;
+  --c-card-border: 255 255 255;
+  --c-fg: 58 18 88;
+  --c-fg-2: 92 52 132;
+  --c-muted: 124 86 160;
+  --c-primary: 214 28 146;
+  --c-primary-fg: 255 255 255;
+  --c-primary-soft: 255 214 240;
+  --c-accent: 52 104 240;
+  --c-accent-soft: 220 230 255;
+  --c-success: 14 140 104;
+  --c-warning: 200 116 0;
+  --c-danger: 214 30 80;
+  --surface-alpha: 0.72;
+  --surface-blur: 14px;
+  --card-border-w: 2px;
+  --card-border-alpha: 0.95;
+  --card-backdrop: linear-gradient(180deg, rgb(255 255 255 / 0.75), rgb(255 255 255 / 0.15) 55%, transparent);
+  --r-card: 28px;
+  --r-control: 999px;
+  --shadow-card: 0 10px 28px -10px rgb(190 60 210 / 0.45), inset 0 -3px 0 rgb(var(--c-primary) / 0.08);
+  --font-display-stack: 'Arial Rounded MT Bold', 'Yuanti SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --display-weight: 800;
+  --display-tracking: 0.02em;
+  --timeline-style: dotted;
+  --app-backdrop: linear-gradient(135deg, rgb(255 196 236), rgb(200 224 255) 35%, rgb(214 255 240) 65%, rgb(255 228 200));
+}
+
+[data-theme='memphis'] {
+  /* 孟菲斯：明黄底、彩色波点和斜纹、3px 黑框、青色错位硬阴影 */
+  color-scheme: light;
+  --c-bg: 255 222 80;
+  --c-surface: 255 255 255;
+  --c-surface-2: 255 244 200;
+  --c-line: 30 30 30;
+  --c-card-border: 20 20 20;
+  --c-fg: 20 20 20;
+  --c-fg-2: 48 44 36;
+  --c-muted: 92 84 64;
+  --c-primary: 116 52 226;
+  --c-primary-fg: 255 255 255;
+  --c-primary-soft: 232 222 255;
+  --c-accent: 0 150 142;
+  --c-accent-soft: 200 245 240;
+  --c-success: 0 130 80;
+  --c-warning: 200 96 0;
+  --c-danger: 214 30 70;
+  --surface-alpha: 1;
+  --surface-blur: 0px;
+  --card-border-w: 3px;
+  --card-border-alpha: 1;
+  --r-card: 14px;
+  --r-control: 8px;
+  --shadow-card: 6px 6px 0 rgb(var(--c-accent));
+  --font-display-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --display-weight: 900;
+  --display-tracking: 0.01em;
+  --timeline-style: solid;
+  --app-backdrop: radial-gradient(circle, rgb(var(--c-primary)) 0 5px, transparent 6px),
+    radial-gradient(circle, rgb(255 90 150) 0 4px, transparent 5px),
+    repeating-linear-gradient(45deg, transparent 0 26px, rgb(var(--c-fg) / 0.07) 26px 29px);
+  --app-backdrop-size: 110px 110px, 110px 110px, auto;
+  --app-backdrop-position: 0 0, 55px 55px, 0 0;
+}
+
+[data-theme='vapor'] {
+  /* 蒸汽波：深紫底、粉色落日渐变、霓虹网格、宽字距 */
+  color-scheme: dark;
+  --c-bg: 38 14 66;
+  --c-surface: 58 24 98;
+  --c-surface-2: 78 36 124;
+  --c-line: 120 70 170;
+  --c-card-border: 255 160 230;
+  --c-fg: 255 240 250;
+  --c-fg-2: 242 206 238;
+  --c-muted: 206 168 226;
+  --c-primary: 255 110 199;
+  --c-primary-fg: 40 10 50;
+  --c-primary-soft: 102 40 112;
+  --c-accent: 120 228 255;
+  --c-accent-soft: 30 60 102;
+  --c-success: 110 240 180;
+  --c-warning: 255 210 100;
+  --c-danger: 255 110 130;
+  --surface-alpha: 0.72;
+  --surface-blur: 10px;
+  --card-border-w: 1px;
+  --card-border-alpha: 0.45;
+  --r-card: 10px;
+  --r-control: 6px;
+  --shadow-card: 5px 5px 0 rgb(var(--c-accent) / 0.45);
+  --font-display-stack: 'Didot', 'Songti SC', 'Noto Serif SC', serif;
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --display-weight: 700;
+  --display-tracking: 0.22em;
+  --display-shadow: 3px 3px 0 rgb(var(--c-accent) / 0.55);
+  --timeline-style: solid;
+  --app-backdrop: linear-gradient(180deg, rgb(255 120 200 / 0.38), rgb(255 170 120 / 0.12) 30%, transparent 48%),
+    linear-gradient(rgb(var(--c-primary) / 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--c-primary) / 0.16) 1px, transparent 1px);
+  --app-backdrop-size: auto, 36px 36px, 36px 36px;
+}
+
+[data-theme='newsprint'] {
+  /* 号外报纸：新闻纸底、粗衬线、双线框、红色批注 */
+  color-scheme: light;
+  --c-bg: 238 234 222;
+  --c-surface: 247 244 235;
+  --c-surface-2: 228 223 208;
+  --c-line: 60 56 48;
+  --c-card-border: 24 22 18;
+  --c-fg: 20 18 15;
+  --c-fg-2: 50 46 40;
+  --c-muted: 96 90 80;
+  --c-primary: 20 18 15;
+  --c-primary-fg: 247 244 235;
+  --c-primary-soft: 222 216 200;
+  --c-accent: 186 28 28;
+  --c-accent-soft: 244 218 212;
+  --c-success: 40 100 50;
+  --c-warning: 150 100 10;
+  --c-danger: 186 28 28;
+  --surface-alpha: 1;
+  --surface-blur: 0px;
+  --card-border-w: 1px;
+  --card-border-alpha: 1;
+  --r-card: 0px;
+  --r-control: 0px;
+  --shadow-card: 0 0 0 3px rgb(var(--c-surface)), 0 0 0 4px rgb(var(--c-card-border));
+  --font-display-stack: 'Songti SC', 'STSong', 'Noto Serif SC', 'Times New Roman', serif;
+  --font-body-stack: 'Songti SC', 'STSong', 'Noto Serif SC', Georgia, serif;
+  --display-weight: 900;
+  --display-tracking: 0.06em;
+  --timeline-style: solid;
+  --app-backdrop: radial-gradient(rgb(var(--c-fg) / 0.06) 0.8px, transparent 1px);
+  --app-backdrop-size: 4px 4px;
+}
+
+[data-theme='blueprint'] {
+  /* 工程蓝图：制图蓝底、白色网格（小格 + 大格）、白线框、黄色标注、等宽字 */
+  color-scheme: dark;
+  --c-bg: 16 58 128;
+  --c-surface: 20 68 146;
+  --c-surface-2: 32 86 168;
+  --c-line: 118 160 222;
+  --c-card-border: 224 236 255;
+  --c-fg: 240 246 255;
+  --c-fg-2: 206 224 248;
+  --c-muted: 166 196 236;
+  --c-primary: 255 214 80;
+  --c-primary-fg: 16 40 90;
+  --c-primary-soft: 54 84 120;
+  --c-accent: 140 230 255;
+  --c-accent-soft: 30 90 150;
+  --c-success: 140 240 170;
+  --c-warning: 255 214 80;
+  --c-danger: 255 130 120;
+  --surface-alpha: 0.82;
+  --surface-blur: 2px;
+  --card-border-w: 1.5px;
+  --card-border-alpha: 0.75;
+  --r-card: 0px;
+  --r-control: 0px;
+  --shadow-card: none;
+  --font-display-stack: var(--font-mono-stack);
+  --font-body-stack: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --display-weight: 700;
+  --display-tracking: 0.08em;
+  --timeline-style: dashed;
+  --app-backdrop: linear-gradient(rgb(255 255 255 / 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.14) 1px, transparent 1px),
+    linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  --app-backdrop-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}

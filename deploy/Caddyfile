@@ -1,0 +1,6 @@
+# 有域名时把 APP_DOMAIN 设成域名，Caddy 自动申请并续期 Let's Encrypt 证书；
+# 默认 localhost 用 Caddy 自带的本地证书（浏览器会提示不受信任，开发时点继续即可）。
+{$APP_DOMAIN:localhost} {
+	encode zstd gzip
+	reverse_proxy app:3000
+}

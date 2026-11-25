@@ -1,0 +1,89 @@
+# 一键部署：cp .env.example .env（改密码、域名）→ docker compose up -d --build
+# 开发只起依赖：npm run dev:deps（数据库 + Mailpit），前后端用 npm run dev 在本机跑。
+name: daymate
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+      args:
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmmirror.com}
+    image: daymate-app:${APP_VERSION:-0.1.0}
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-daymate}:${POSTGRES_PASSWORD:-daymate}@db:5432/${POSTGRES_DB:-daymate}
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+    volumes:
+      - uploads:/data/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-daymate}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-daymate}
+      POSTGRES_DB: ${POSTGRES_DB:-daymate}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # 只绑本机回环地址：本机开发可连，外网访问不到
+    ports:
+      - "127.0.0.1:${DB_PUBLISH_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:-localhost}
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  backup:
+    image: pgvector/pgvector:pg17
+    entrypoint: ["/bin/sh", "/backup.sh"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-daymate}
+      POSTGRES_DB: ${POSTGRES_DB:-daymate}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-daymate}
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./deploy/backup.sh:/backup.sh:ro
+      - backups:/backups
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # 开发用：接收所有测试邮件，网页 http://localhost:8025
+  mailpit:
+    image: axllent/mailpit
+    profiles: ["dev"]
+    ports:
+      - "127.0.0.1:8025:8025"
+      - "127.0.0.1:1025:1025"
+
+volumes:
+  pgdata:
+  uploads:
+  caddy_data:
+  caddy_config:
+  backups:
