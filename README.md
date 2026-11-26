@@ -32,7 +32,7 @@ docker compose up -d --build
 |---|---|
 | app | 前后端，启动时自动执行数据库迁移 |
 | db | PostgreSQL 17（含 pgvector），只绑本机 127.0.0.1:5432 |
-| caddy | 对外 80 + 3101（HTTPS），自动 HTTPS |
+| caddy | 只对外开 3101（HTTPS），不占 80 端口；有域名时证书放 `deploy/certs/`，`.env` 设 `TLS`（见 `deploy/Caddyfile`） |
 | backup | 每天 3 点 pg_dump，保留 14 天（卷 `daymate_backups`） |
 
 健康检查：`curl -k https://localhost:3101/api/health`

@@ -5,5 +5,7 @@ dist/
 !.env.example
 .DS_Store
 *.log
+deploy/certs/*
+!deploy/certs/.gitkeep
 test-results/
 playwright-report/
