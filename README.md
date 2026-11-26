@@ -26,16 +26,16 @@ cp .env.example .env          # 至少改 POSTGRES_PASSWORD；有域名就填 AP
 docker compose up -d --build
 ```
 
-打开 `https://localhost`（本地证书浏览器会提示不安全，点继续）。服务：
+打开 `https://localhost:3101`（本地证书浏览器会提示不安全，点继续）。服务：
 
 | 服务 | 说明 |
 |---|---|
 | app | 前后端，启动时自动执行数据库迁移 |
 | db | PostgreSQL 17（含 pgvector），只绑本机 127.0.0.1:5432 |
-| caddy | 对外 80/443，自动 HTTPS |
+| caddy | 对外 80 + 3101（HTTPS），自动 HTTPS |
 | backup | 每天 3 点 pg_dump，保留 14 天（卷 `daymate_backups`） |
 
-健康检查：`curl -k https://localhost/api/health`
+健康检查：`curl -k https://localhost:3101/api/health`
 
 测试邮件：`docker compose --profile dev up -d mailpit` 后打开 http://localhost:8025 查看验证邮件、找回密码邮件（`.env` 里 `SMTP_HOST=mailpit`）。
 
@@ -55,7 +55,7 @@ SMTP_HOST=localhost SMTP_PORT=1025 npm run dev   # 后端 :3100 + 前端 :5173�
 ```bash
 npm run typecheck                    # 全部类型检查
 npm test                             # 单元测试 + 接口测试（接口测试用 daymate_test 库，需先 npm run dev:deps）
-npm run test:e2e                     # 浏览器端到端测试（需前后端和 Mailpit 在跑；E2E_BASE_URL=https://localhost 测 Docker 版）
+npm run test:e2e                     # 浏览器端到端测试（需前后端和 Mailpit 在跑；E2E_BASE_URL=https://localhost:3101 测 Docker 版）
 npm run lint:colors -w @daymate/web  # 检查是否写死颜色（必须通过）
 npm run db:generate                  # 改了 apps/server/src/db/schema.ts 后生成迁移
 cd apps/server && npm run eval       # 一句话解析评测集（真实大模型，40 条）

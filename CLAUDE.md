@@ -24,7 +24,7 @@ npm run lint:colors -w @daymate/web                # 禁止写死颜色，必须
 npm run db:generate                                # 改了 apps/server/src/db/schema.ts 后生成迁移 SQL
 cd apps/server && npm run eval [-- 关键词]          # 一句话解析评测集（真实模型，读根目录 .env）；改提示词或换模型前后都跑
 npm run test:e2e                                   # Playwright（需前后端 + Mailpit 在跑；后端加 RATE_LIMIT=off 避免注册限流）
-E2E_BASE_URL=https://localhost npm run test:e2e    # 测 Docker 部署版
+E2E_BASE_URL=https://localhost:3101 npm run test:e2e    # 测 Docker 部署版
 
 # 单个测试
 cd apps/server && npx vitest run test/auth.test.ts -t "注销"
@@ -32,7 +32,7 @@ cd apps/web && npx vitest run src/theme/themes.test.ts
 npx playwright test -g "注册表单"
 
 # 部署（本机）
-docker compose up -d --build                       # app + db + caddy(HTTPS) + backup；打开 https://localhost
+docker compose up -d --build                       # app + db + caddy(HTTPS) + backup；打开 https://localhost:3101
 docker compose --profile dev up -d mailpit         # 测试邮件网页 http://localhost:8025
 ```
 

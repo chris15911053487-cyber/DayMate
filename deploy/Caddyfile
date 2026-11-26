@@ -1,5 +1,10 @@
-# 有域名时把 APP_DOMAIN 设成域名，Caddy 自动申请并续期 Let's Encrypt 证书；
+# 对外 HTTPS 端口默认 3101（HTTPS_PORT），容器内外端口一致，HTTP 自动跳转时才会带上正确端口。
+# 有域名时把 APP_DOMAIN 设成域名，Caddy 自动申请并续期 Let's Encrypt 证书（需要外网能访问本机 80 端口做验证）；
 # 默认 localhost 用 Caddy 自带的本地证书（浏览器会提示不受信任，开发时点继续即可）。
+{
+	https_port {$HTTPS_PORT:3101}
+}
+
 {$APP_DOMAIN:localhost} {
 	encode zstd gzip
 	reverse_proxy app:3000
